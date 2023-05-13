@@ -3,9 +3,10 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import api from 'api/api';
 import Searchbar from './Searchbar/searchbar';
-import { ImageGallery } from './ImageGallery/imageGallery';
+import ImageGallery from './ImageGallery/imageGallery';
 import Modal from './Modal/modal';
 import Button from './Button/button';
+import Loader from './Loader/loader';
 
 class App extends Component {
   state = {
@@ -28,6 +29,7 @@ class App extends Component {
       this.setState({ isLoading: false });
     }
   }
+
   handleFormSubmit = searchQuery => {
     this.setState({ searchQuery });
   };
@@ -44,9 +46,10 @@ class App extends Component {
     return (
       <>
         <Searchbar onSubmit={this.handleFormSubmit} />
-        {showModal && <Modal onClose={this.toogleModal} />}
+        {this.state.isLoading && <Loader />}
+        {this.state.showModal && <Modal onClose={this.toogleModal} />}
         <ImageGallery images={this.state.images} />
-        {images && <Button onLoadMoreBtnClick={this.onLoadMore} />}
+        {this.state.images && <Button onLoadMoreBtnClick={this.onLoadMore} />}
         <ToastContainer
           position="top-right"
           autoClose={3000}

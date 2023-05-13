@@ -13,7 +13,7 @@ function ImageGalleryItem({ id, webformatURL, largeImageURL, onClickImg }) {
   );
 }
 
-ImageGalleryItem.PropTypes = {
+ImageGalleryItem.propTypes = {
   id: PropTypes.number.isRequired,
   webformatURL: PropTypes.string.isRequired,
   largeImageURL: PropTypes.string.isRequired,
