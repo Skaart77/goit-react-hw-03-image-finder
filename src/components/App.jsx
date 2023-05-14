@@ -23,7 +23,7 @@ class App extends Component {
       prevState.searchQuery !== this.state.searchQuery ||
       prevState.page !== this.state.page
     ) {
-      this.setState({ isLoading: true });
+      this.setState({ isLoading: true, images: [] });
       try {
         const response = await fetchImagesWithQuery(
           this.state.searchQuery,
@@ -60,12 +60,17 @@ class App extends Component {
 
   render() {
     const { isLoading, showModal, images } = this.state;
+
+    if (isLoading === 'false') {
+      return <Loader />;
+    }
+
     return (
       <div className="App">
         <Searchbar onSubmit={this.handleFormSubmit} />
-        {isLoading && <Loader />}
+        {/* {isLoading && <Loader />} */}
         {showModal && <Modal onClose={this.toogleModal} />}
-        <ImageGallery images={images} />
+        <ImageGallery items={images} />
         {images.length >= 12 && <Button onClick={this.onLoadMore} />}
         <ToastContainer
           position="top-right"

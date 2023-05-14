@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ImageGalleryItem from './imageGalleryItem';
 
-function ImageGallery({ images, onClickImg }) {
+function ImageGallery({ items, onClickImg }) {
   return (
     <ul className="ImageGallery">
-      {images.map(({ id, webformatURL, largeImageURL }) => (
+      {items.map(({ id, webformatURL, largeImageURL }) => (
         <ImageGalleryItem
           key={id}
           webformatURL={webformatURL}
@@ -18,7 +18,7 @@ function ImageGallery({ images, onClickImg }) {
 }
 
 ImageGallery.propTypes = {
-  images: PropTypes.arrayOf(
+  items: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
       webformatURL: PropTypes.string,
