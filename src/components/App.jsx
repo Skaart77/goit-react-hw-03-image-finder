@@ -21,7 +21,7 @@ class App extends Component {
   async componentDidMount() {
     this.setState({ isLoading: true });
     try {
-      const images = api.fetchImagesWithQuery('react');
+      const images = await api.fetchImagesWithQuery('react');
       this.setState({ images });
     } catch (error) {
       this.setState({ error });
@@ -43,13 +43,14 @@ class App extends Component {
   };
 
   render() {
+    const { isLoading, showModal, images } = this.state;
     return (
-      <>
+      <div className="App">
         <Searchbar onSubmit={this.handleFormSubmit} />
-        {this.state.isLoading && <Loader />}
-        {this.state.showModal && <Modal onClose={this.toogleModal} />}
-        <ImageGallery images={this.state.images} />
-        {this.state.images && <Button onLoadMoreBtnClick={this.onLoadMore} />}
+        {isLoading && <Loader />}
+        {showModal && <Modal onClose={this.toogleModal} />}
+        <ImageGallery images={images} />
+        {images.length >= 12 && <Button onLoadMoreBtnClick={this.onLoadMore} />}
         <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -62,7 +63,7 @@ class App extends Component {
           pauseOnHover
           theme="colored"
         />
-      </>
+      </div>
     );
   }
 }
