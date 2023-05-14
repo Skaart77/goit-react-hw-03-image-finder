@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import api from 'api/api';
+import { fetchImagesWithQuery } from 'api/api';
 import Searchbar from './Searchbar/searchbar';
 import ImageGallery from './ImageGallery/imageGallery';
 import Modal from './Modal/modal';
@@ -21,7 +21,7 @@ class App extends Component {
   async componentDidMount() {
     this.setState({ isLoading: true });
     try {
-      const images = await api.fetchImagesWithQuery('react');
+      const images = await fetchImagesWithQuery('react');
       this.setState({ images });
     } catch (error) {
       this.setState({ error });
@@ -49,7 +49,7 @@ class App extends Component {
         <Searchbar onSubmit={this.handleFormSubmit} />
         {isLoading && <Loader />}
         {showModal && <Modal onClose={this.toogleModal} />}
-        <ImageGallery images={images} />
+        {images.length > 0 ? <ImageGallery images={images} /> : null}
         {images.length >= 12 && <Button onLoadMoreBtnClick={this.onLoadMore} />}
         <ToastContainer
           position="top-right"
