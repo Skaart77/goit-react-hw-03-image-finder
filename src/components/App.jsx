@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { fetchImagesWithQuery } from 'api/api';
 import Searchbar from './Searchbar/searchbar';
@@ -13,25 +13,41 @@ class App extends Component {
     images: [],
     isLoading: false,
     error: null,
-    pageNumber: 1,
-    searchQuery: '',
+    page: 1,
     showModal: false,
+    searchQuery: '',
   };
 
-  async componentDidMount() {
-    this.setState({ isLoading: true });
-    try {
-      const images = await fetchImagesWithQuery('react');
-      this.setState({ images });
-    } catch (error) {
-      this.setState({ error });
-    } finally {
-      this.setState({ isLoading: false });
+  async componentDidUpdate(prevProps, prevState) {
+    if (
+      prevState.searchQuery !== this.state.searchQuery ||
+      prevState.page !== this.state.page
+    ) {
+      this.setState({ isLoading: true });
+      try {
+        const response = await fetchImagesWithQuery(
+          this.state.searchQuery,
+          this.state.page
+        );
+
+        if (response.length === 0) {
+          this.setState({ isLoading: false });
+          return toast.error('Enter your search query!');
+        }
+        if (response.length > 0) {
+          this.setState(({ images }) => ({
+            images: [...images, ...response],
+            isLoading: true,
+          }));
+        }
+      } catch (error) {
+        this.setState({ isLoading: false, error });
+      }
     }
   }
 
   handleFormSubmit = searchQuery => {
-    this.setState({ searchQuery });
+    this.setState({ searchQuery, page: 1, images: [] });
   };
 
   toogleModal = () => {
@@ -39,7 +55,7 @@ class App extends Component {
   };
 
   onLoadMore = () => {
-    this.setState(({ pageNumber }) => ({ pageNumber: pageNumber + 1 }));
+    this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
   render() {
@@ -49,8 +65,8 @@ class App extends Component {
         <Searchbar onSubmit={this.handleFormSubmit} />
         {isLoading && <Loader />}
         {showModal && <Modal onClose={this.toogleModal} />}
-        {images.length > 0 ? <ImageGallery images={images} /> : null}
-        {images.length >= 12 && <Button onLoadMoreBtnClick={this.onLoadMore} />}
+        <ImageGallery images={images} />
+        {images.length >= 12 && <Button onClick={this.onLoadMore} />}
         <ToastContainer
           position="top-right"
           autoClose={3000}

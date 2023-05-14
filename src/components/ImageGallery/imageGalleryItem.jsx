@@ -14,10 +14,10 @@ function ImageGalleryItem({ id, webformatURL, largeImageURL, onClickImg }) {
 }
 
 ImageGalleryItem.propTypes = {
-  id: PropTypes.number.isRequired,
-  webformatURL: PropTypes.string.isRequired,
-  largeImageURL: PropTypes.string.isRequired,
-  onClickImg: PropTypes.func.isRequired,
+  id: PropTypes.number,
+  webformatURL: PropTypes.string,
+  largeImageURL: PropTypes.string,
+  onClickImg: PropTypes.func,
 };
 
 export default ImageGalleryItem;

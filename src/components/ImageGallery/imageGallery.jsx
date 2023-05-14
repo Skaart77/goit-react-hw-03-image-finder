@@ -20,11 +20,12 @@ function ImageGallery({ images, onClickImg }) {
 ImageGallery.propTypes = {
   images: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      webformatURL: PropTypes.string.isRequired,
-      largeImageURL: PropTypes.string.isRequired,
+      id: PropTypes.number,
+      webformatURL: PropTypes.string,
+      largeImageURL: PropTypes.string,
     })
   ),
+  onClickImg: PropTypes.func,
 };
 
 export default ImageGallery;
