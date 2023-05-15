@@ -71,7 +71,7 @@ class App extends Component {
         {/* {isLoading && <Loader />} */}
         {showModal && <Modal onClose={this.toogleModal} />}
         <ImageGallery onClickImg={images} />
-        {images.length >= 12 && <Button onClick={this.onLoadMore} />}
+        {images.length >= 12 && <Button onLoadMoreBtnClick={this.onLoadMore} />}
         <ToastContainer
           position="top-right"
           autoClose={3000}
