@@ -70,7 +70,7 @@ class App extends Component {
         <Searchbar onSubmit={this.handleFormSubmit} />
         {/* {isLoading && <Loader />} */}
         {showModal && <Modal onClose={this.toogleModal} />}
-        <ImageGallery items={images} />
+        <ImageGallery onClickImg={images} />
         {images.length >= 12 && <Button onClick={this.onLoadMore} />}
         <ToastContainer
           position="top-right"
