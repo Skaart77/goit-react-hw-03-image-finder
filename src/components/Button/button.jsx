@@ -1,6 +1,10 @@
 function Button({ onLoadMoreBtnClick }) {
   return (
-    <button onClick={onLoadMoreBtnClick} type="button" className="Button">
+    <button
+      onLoadMoreBtnClick={onLoadMoreBtnClick}
+      type="button"
+      className="Button"
+    >
       Load more
     </button>
   );
