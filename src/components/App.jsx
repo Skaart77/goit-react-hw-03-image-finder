@@ -59,8 +59,8 @@ class App extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
-  clickCurrentImg = url => {
-    this.setState({ largeImageURL: url });
+  clickCurrentImg = imgUrl => {
+    this.setState({ largeImageURL: imgUrl });
     this.toggleModal();
   };
 
@@ -78,7 +78,7 @@ class App extends Component {
         {showModal && (
           <Modal
             onClose={this.toogleModal}
-            largeImageURL={this.clickCurrentImg}
+            webformatURL={this.clickCurrentImg}
           />
         )}
         <ImageGallery items={images} onClickImg={this.clickCurrentImg} />
