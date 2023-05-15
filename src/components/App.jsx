@@ -16,6 +16,7 @@ class App extends Component {
     page: 1,
     showModal: false,
     searchQuery: '',
+    largeImageURL: '',
   };
 
   async componentDidUpdate(prevProps, prevState) {
@@ -58,6 +59,11 @@ class App extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
+  clickCurrentImg = url => {
+    this.setState({ largeImageURL: url });
+    this.toggleModal();
+  };
+
   render() {
     const { isLoading, showModal, images } = this.state;
 
@@ -69,8 +75,13 @@ class App extends Component {
       <div className="App">
         <Searchbar onSubmit={this.handleFormSubmit} />
         {/* {isLoading && <Loader />} */}
-        {showModal && <Modal onClose={this.toogleModal} />}
-        <ImageGallery onClickImg={images} />
+        {showModal && (
+          <Modal
+            onClose={this.toogleModal}
+            largeImageURL={this.clickCurrentImg}
+          />
+        )}
+        <ImageGallery items={images} onClickImg={this.clickCurrentImg} />
         {images.length >= 12 && <Button onLoadMoreBtnClick={this.onLoadMore} />}
         <ToastContainer
           position="top-right"
