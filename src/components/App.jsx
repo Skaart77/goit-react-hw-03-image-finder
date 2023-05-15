@@ -65,7 +65,7 @@ class App extends Component {
   };
 
   render() {
-    const { isLoading, showModal, images } = this.state;
+    const { isLoading, showModal, images, largeImageURL } = this.state;
 
     if (isLoading === 'false') {
       return <Loader />;
@@ -76,10 +76,7 @@ class App extends Component {
         <Searchbar onSubmit={this.handleFormSubmit} />
         {/* {isLoading && <Loader />} */}
         {showModal && (
-          <Modal
-            onClose={this.toogleModal}
-            webformatURL={this.clickCurrentImg}
-          />
+          <Modal onClose={this.toogleModal} webformatURL={largeImageURL} />
         )}
         <ImageGallery items={images} onClickImg={this.clickCurrentImg} />
         {images.length >= 12 && <Button onLoadMoreBtnClick={this.onLoadMore} />}
