@@ -43,7 +43,10 @@ class App extends Component {
   }
 
   handleFormSubmit = searchQuery => {
-    this.setState({ searchQuery, page: 1, images: [] });
+    this.setState({
+      searchQuery,
+      images: [],
+    });
   };
 
   toogleModal = () => {
