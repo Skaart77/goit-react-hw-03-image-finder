@@ -16,20 +16,15 @@ class App extends Component {
     page: 1,
     showModal: false,
     searchQuery: '',
-    largeImageURL: '',
+    currentImgLarge: '',
   };
 
   async componentDidUpdate(prevProps, prevState) {
-    if (
-      prevState.searchQuery !== this.state.searchQuery ||
-      prevState.page !== this.state.page
-    ) {
-      this.setState({ isLoading: true, images: [] });
+    const { searchQuery, page } = this.state;
+    if (prevState.searchQuery !== searchQuery || prevState.page !== page) {
+      this.setState({ isLoading: true });
       try {
-        const response = await fetchImagesWithQuery(
-          this.state.searchQuery,
-          this.state.page
-        );
+        const response = await fetchImagesWithQuery(searchQuery, page);
 
         if (response.length === 0) {
           this.setState({ isLoading: false });
@@ -59,13 +54,14 @@ class App extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
-  clickCurrentImg = imgUrl => {
-    this.setState({ largeImageURL: imgUrl });
-    this.toggleModal();
+  onCurrentImageClick = largeImgURL => {
+    this.setState(({ currentImgLarge, showModal }) => ({
+      currentImgLargeUrl: largeImgURL,
+      showModal: !showModal,
+    }));
   };
-
   render() {
-    const { isLoading, showModal, images, largeImageURL } = this.state;
+    const { isLoading, showModal, images, currentImgLarge } = this.state;
 
     if (isLoading === 'false') {
       return <Loader />;
@@ -76,9 +72,9 @@ class App extends Component {
         <Searchbar onSubmit={this.handleFormSubmit} />
         {/* {isLoading && <Loader />} */}
         {showModal && (
-          <Modal onClose={this.toogleModal} webformatURL={largeImageURL} />
+          <Modal onClose={this.toogleModal} webformatURL={currentImgLarge} />
         )}
-        <ImageGallery items={images} onClickImg={this.clickCurrentImg} />
+        <ImageGallery items={images} onClickImg={this.onCurrentImageClick} />
         {images.length >= 12 && <Button onLoadMoreBtnClick={this.onLoadMore} />}
         <ToastContainer
           position="top-right"
