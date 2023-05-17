@@ -57,9 +57,15 @@ class App extends Component {
     this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
+  // onCurrentImageClick = largeImgURL => {
+  //   this.setState(({ currentImgLarge, showModal }) => ({
+  //     currentImgLarge: largeImgURL,
+  //     showModal: !showModal,
+  //   }));
+  // };
   onCurrentImageClick = largeImgURL => {
-    this.setState(({ currentImgLarge, showModal }) => ({
-      currentImgLarge: largeImgURL,
+    this.setState(({ showModal }) => ({
+      largeImgURL,
       showModal: !showModal,
     }));
   };
