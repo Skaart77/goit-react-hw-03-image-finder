@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
+import { BiSearch } from 'react-icons/bi';
 
 class Searchbar extends Component {
   state = {
@@ -24,7 +25,7 @@ class Searchbar extends Component {
       <header className="Searchbar">
         <form className="SearchForm" onSubmit={this.handleSubmit}>
           <button type="submit" className="SearchForm-button">
-            <span className="SearchForm-button-label">Search</span>
+            <BiSearch size={30} />
           </button>
 
           <input
