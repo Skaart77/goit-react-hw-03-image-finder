@@ -9,7 +9,7 @@ function ImageGallery({ items, onClickImg }) {
         <ImageGalleryItem
           key={id}
           webformatURL={webformatURL}
-          largeImageURLL={largeImageURL}
+          largeImageURL={largeImageURL}
           onClickImg={onClickImg}
         />
       ))}
